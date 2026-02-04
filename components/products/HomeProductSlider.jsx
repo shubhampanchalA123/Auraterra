@@ -99,7 +99,7 @@ export default function HomeProductSlider() {
                 </p>
 
                 <Link
-                  href={`/products/${product.slug}`}
+                  href={`/products`}
                   className="inline-block mt-5 text-blue-600 font-semibold hover:underline"
                 >
                   More →

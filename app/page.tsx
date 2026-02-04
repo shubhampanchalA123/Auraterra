@@ -90,7 +90,7 @@ export default function Home() {
   ];
 
   // ⭐ STAR COMPONENT
-  const Stars = ({ rating }) => {
+  const Stars = ({ rating = 0 }) => {
     const fullStars = Math.floor(rating);
     return (
       <div className="flex justify-center gap-1">

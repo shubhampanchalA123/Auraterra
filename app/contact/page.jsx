@@ -29,7 +29,7 @@ Message:
 ${form.message}
     `;
 
-        window.location.href = `mailto:rajfactsps@gmail.com?subject=${encodeURIComponent(
+        window.location.href = `mailto:info@auroterraenergy.com?subject=${encodeURIComponent(
             subject
         )}&body=${encodeURIComponent(body)}`;
     };

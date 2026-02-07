@@ -10,14 +10,7 @@ const Header = () => {
   return (
     <header className="w-full">
 
-      {/* TOP BAR */}
-      <div className="bg-blue-700 text-white text-xs md:text-sm">
-        <div className="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row gap-1 md:gap-6 md:justify-between md:items-center text-center md:text-left">
-          <span>info@auroterraenergy.com</span>
-          <span>+91 7042997771</span>
-          <span>Mon–Sun | 7:00 AM – 9:00 PM</span>
-        </div>
-      </div>
+
 
       {/* NAVBAR */}
       <div className="bg-white shadow-md fixed top-0 z-50 w-full">

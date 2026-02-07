@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import Header from "@/components/layout/header/Header";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import HomeProductSlider from "@/components/products/HomeProductSlider";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -88,6 +88,27 @@ export default function Home() {
         "Suspendisse vitae varius ipsum. Nam elementum lectus eu enim rutrum, id ultrices mauris viverra. Vivamus sodales condimentum eros, in tempus magna facilisis sit amet.",
     },
   ];
+
+
+  const Counter = ({ value }: { value: number }) => {
+    const motionValue = useMotionValue(0);
+
+    const rounded = useTransform(motionValue, latest =>
+      Math.round(latest)
+    );
+
+    useEffect(() => {
+      const controls = animate(motionValue, value, {
+        duration: 2.2,
+        ease: "easeOut",
+      });
+
+      return controls.stop;
+    }, [value]);
+
+    return <motion.span>{rounded}</motion.span>;
+  };
+
 
   // ⭐ STAR COMPONENT
   const Stars = ({ rating = 0 }) => {
@@ -214,38 +235,79 @@ export default function Home() {
 
 
 
-      <section className="bg-gray-50 py-6">
-        <div className="max-w-7xl mx-auto px-4">
 
 
+      {/* ================= ADVANCED STATS SECTION ================= */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
 
-          <HomeProductSlider />
+        {/* Animated background blur */}
+        <motion.div
+          animate={{ y: [0, -30, 0] }}
+          transition={{ duration: 12, repeat: Infinity }}
+          className="absolute -top-20 -left-20 w-96 h-96 bg-blue-600/20 blur-3xl rounded-full"
+        />
 
+        <motion.div
+          animate={{ y: [0, 40, 0] }}
+          transition={{ duration: 14, repeat: Infinity }}
+          className="absolute bottom-0 right-0 w-96 h-96 bg-purple-600/20 blur-3xl rounded-full"
+        />
 
-          {/* FINAL CTA */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4">
+
+          {/* HEADING */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mt-20 text-center bg-gray-800 text-white py-14 rounded-2xl"
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto text-white"
           >
-            <h2 className="text-3xl font-bold">
-              Looking for Bulk Orders or Custom Grades?
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Auroterra in Numbers
             </h2>
-            <p className="mt-4 text-blue-100">
-              Contact our team today for customized solutions and best pricing.
+            <p className="mt-4 text-gray-300 text-lg">
+              Our growth, capability and trust — reflected in numbers
             </p>
-            <Link
-              href="/contact"
-              className="inline-block mt-6 bg-white text-blue-600 px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition"
-            >
-              Contact Us
-            </Link>
           </motion.div>
 
+          {/* STATS GRID */}
+          <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+            {[
+              { number: 10, suffix: "+", label: "Years of Industry Experience" },
+              { number: 50, suffix: "+", label: "Polymer Grades Available" },
+              { number: 300, suffix: "+", label: "Industrial Clients Served" },
+              { number: 6, suffix: "+", label: "Industries We Supply" },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.15 }}
+                whileHover={{ y: -12, scale: 1.05 }}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 text-center shadow-xl"
+              >
+                {/* NUMBER */}
+                <div className="text-5xl font-bold text-blue-400">
+                  <Counter value={item.number} />
+                  {item.suffix}
+                </div>
+
+                {/* LABEL */}
+                <p className="mt-4 text-gray-300 text-sm tracking-wide uppercase">
+                  {item.label}
+                </p>
+              </motion.div>
+            ))}
+
+          </div>
         </div>
       </section>
+      {/* ================= END STATS SECTION ================= */}
+
+
 
       {/* customer ratings */}
       <section className="bg-gray-50 py-20">
@@ -260,6 +322,9 @@ export default function Home() {
               Trusted by long-term industrial and commercial clients
             </p>
           </div>
+
+
+
 
           {/* SLIDER */}
           <div className="mt-14 relative">
@@ -305,6 +370,146 @@ export default function Home() {
               </motion.div>
             </AnimatePresence>
           </div>
+
+        </div>
+      </section>
+
+
+
+      {/* ================= MANUFACTURING PROCESS ================= */}
+      <section className="relative py-24 bg-gray-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+
+          {/* HEADING */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto text-white"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Our Manufacturing Process
+            </h2>
+            <p className="mt-4 text-gray-300 text-lg">
+              Every stage is carefully monitored to deliver consistent,
+              high-performance plastic granules
+            </p>
+          </motion.div>
+
+          {/* PROCESS GRID */}
+          <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+
+            {[
+              {
+                step: "01",
+                title: "Raw Material Selection",
+                desc: "Premium-grade polymers sourced from trusted suppliers.",
+                img: "/images/process-1.png",
+              },
+              {
+                step: "02",
+                title: "Compounding & Processing",
+                desc: "Advanced machines ensure precise melting and blending.",
+                img: "/images/process-2.png",
+              },
+              {
+                step: "03",
+                title: "Quality Testing",
+                desc: "Strict checks for strength, color and performance.",
+                img: "/images/process-3.png",
+              },
+              {
+                step: "04",
+                title: "Packaging",
+                desc: "Secure packaging to protect material quality.",
+                img: "/images/process-4.png",
+              },
+              {
+                step: "05",
+                title: "Dispatch & Logistics",
+                desc: "Efficient logistics ensure on-time delivery.",
+                img: "/images/process-5.png",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: i * 0.15 }}
+                whileHover={{ y: -12, scale: 1.05 }}
+                className="group bg-gray-800 border border-white/10 rounded-2xl shadow-xl overflow-hidden"
+              >
+                {/* IMAGE – SQUARE */}
+                <div className="relative w-full aspect-square overflow-hidden">
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+
+                {/* CONTENT */}
+                <div className="p-6 relative text-white">
+
+                  {/* STEP BADGE */}
+                  <div className="absolute -top-6 left-6 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold shadow-lg">
+                    {item.step}
+                  </div>
+
+                  <h3 className="mt-6 text-lg font-semibold">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm text-gray-300 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+
+          </div>
+        </div>
+      </section>
+      {/* ================= END MANUFACTURING PROCESS ================= */}
+
+
+
+
+
+
+
+      <section className="bg-gray-50 py-6">
+        <div className="max-w-7xl mx-auto px-4">
+
+
+
+          <HomeProductSlider />
+
+
+          {/* FINAL CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-20 text-center bg-gray-800 text-white py-14 rounded-2xl"
+          >
+            <h2 className="text-3xl font-bold">
+              Looking for Bulk Orders or Custom Grades?
+            </h2>
+            <p className="mt-4 text-blue-100">
+              Contact our team today for customized solutions and best pricing.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-block mt-6 bg-white text-blue-600 px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition"
+            >
+              Contact Us
+            </Link>
+          </motion.div>
 
         </div>
       </section>
